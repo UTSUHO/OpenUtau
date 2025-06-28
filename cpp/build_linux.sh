@@ -8,11 +8,13 @@ setup()
 
 build()
 {
-    mkdir -p ../runtimes/linux-$1/native
-    bazel build //worldline:worldline -c opt $2
+    echo "Building $1"
+    
+    mkdir -p ../output/$1/native
+    bazel build //worldline:worldline -c opt --config=$2
     chmod +w bazel-bin/worldline/libworldline.so
-    cp bazel-bin/worldline/libworldline.so ../runtimes/linux-$1/native
+    cp bazel-bin/worldline/libworldline.so ../output/$1/native
 }
 
-build x64 "--cpu=k8"
-build arm64 "--config=ubuntu-aarch64"
+build linux-x64 linux
+build linux-arm64 ubuntu-aarch64

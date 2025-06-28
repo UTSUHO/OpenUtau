@@ -20,8 +20,6 @@ namespace OpenUtau.Classic {
         public ResamplerManifest Manifest { get; private set; }
         readonly string _name;
         readonly bool _isLegalPlugin = false;
-        readonly string winePath;
-        readonly bool useWine;
 
 
         public ResamplerManifest LoadManifest() {
@@ -65,10 +63,6 @@ namespace OpenUtau.Classic {
                 _name = Path.GetRelativePath(basePath, filePath);
                 _isLegalPlugin = true;
             }
-            //Check if should use wine
-            string ext = Path.GetExtension(filePath).ToLower();
-            winePath = Preferences.Default.WinePath;
-            useWine = !OS.IsWindows() && !string.IsNullOrEmpty(winePath) && (ext == ".exe" || ext == ".bat");
             //Load Resampler Manifest
             Manifest = LoadManifest();
             //Make moresampler happy
@@ -102,11 +96,7 @@ namespace OpenUtau.Classic {
             string ArgParam = FormattableString.Invariant(
                 $"\"{args.inputTemp}\" \"{tmpFile}\" {MusicMath.GetToneName(args.tone)} {args.velocity} \"{args.GetFlagsString()}\" {args.offset} {args.durRequired} {args.consonant} {args.cutoff} {args.volume} {args.modulation} !{args.tempo} {Base64.Base64EncodeInt12(args.pitches)}");
             logger.Information($" > [thread-{threadId}] {FilePath} {ArgParam}");
-            if (useWine) {
-                ProcessRunner.Run(winePath, $"{FilePath} {ArgParam}", logger);
-            } else {
-                ProcessRunner.Run(FilePath, ArgParam, logger);
-            }
+            ProcessRunner.Run(FilePath, ArgParam, logger);
             return tmpFile;
         }
 

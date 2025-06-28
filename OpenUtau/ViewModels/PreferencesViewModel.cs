@@ -60,7 +60,6 @@ namespace OpenUtau.App.ViewModels {
         [Reactive] public int OtoEditor { get; set; }
         public string VLabelerPath => Preferences.Default.VLabelerPath;
         public string SetParamPath => Preferences.Default.SetParamPath;
-        public string WinePath => Preferences.Default.WinePath;
         [Reactive] public bool ClearCacheOnQuit { get; set; }
         public int LogicalCoreCount {
             get => Environment.ProcessorCount;
@@ -397,13 +396,6 @@ namespace OpenUtau.App.ViewModels {
             Preferences.Default.SetParamPath = path;
             Preferences.Save();
             this.RaisePropertyChanged(nameof(SetParamPath));
-        }
-
-        public void SetWinePath(string path) {
-            Preferences.Default.WinePath = path;
-            Preferences.Save();
-            ToolsManager.Inst.Initialize();
-            this.RaisePropertyChanged(nameof(WinePath));
         }
     }
 }

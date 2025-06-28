@@ -1,16 +1,16 @@
 #!/bin/bash
 
-build()
-{
-    bazel build //worldline:worldline -c opt $2
+build() {
+    echo "Building $1"
+    
+    mkdir -p ../output/$1/native
+    bazel build //worldline:worldline -c opt --cpu=$2
     chmod +w bazel-bin/worldline/libworldline.dylib
-    cp bazel-bin/worldline/libworldline.dylib ../runtimes/osx/native/libworldline-$1.dylib
+    cp bazel-bin/worldline/libworldline.dylib ../output/$1/native
 }
 
-mkdir -p ../runtimes/osx/native
+build osx-x64 darwin_x86_64
+build osx-arm64 darwin_arm64
 
-build x64 "--cpu=darwin_x86_64"
-build arm64 "--cpu=darwin_arm64"
-
-lipo -create ../runtimes/osx/native/libworldline-x64.dylib ../runtimes/osx/native/libworldline-arm64.dylib -output ../runtimes/osx/native/libworldline.dylib
-rm ../runtimes/osx/native/libworldline-x64.dylib ../runtimes/osx/native/libworldline-arm64.dylib
+lipo -create ../output/osx-x64/native/libworldline.dylib ../output/osx-arm64/native/libworldline.dylib -output ../output/osx/native/libworldline.dylib
+rm ../output/osx-x64/native/libworldline.dylib ../output/osx-arm64/native/libworldline.dylib
