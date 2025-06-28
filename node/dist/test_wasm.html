@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worldline WebAssembly 测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Worldline WebAssembly 测试</h1>
+    
+    <div id="status" class="status info">正在加载WebAssembly模块...</div>
+    
+    <div>
+        <button id="testBtn" onclick="testModule()" disabled>测试模块</button>
+        <button id="f0Btn" onclick="testF0()" disabled>测试F0计算</button>
+    </div>
+    
+    <div id="output"></div>
+
+    <script type="module">
+        let WorldlineModule;
+        
+        async function loadModule() {
+            try {
+                const statusDiv = document.getElementById('status');
+                statusDiv.className = 'status info';
+                statusDiv.textContent = '正在加载WebAssembly模块...';
+                
+                // 动态导入模块
+                const module = await import('./worldline_wasm.js');
+                WorldlineModule = module.default;
+                
+                // 初始化模块
+                const instance = await WorldlineModule();
+                
+                statusDiv.className = 'status success';
+                statusDiv.textContent = 'WebAssembly模块加载成功！';
+                
+                // 启用测试按钮
+                document.getElementById('testBtn').disabled = false;
+                document.getElementById('f0Btn').disabled = false;
+                
+                // 将实例保存到全局变量
+                window.worldlineInstance = instance;
+                
+            } catch (error) {
+                const statusDiv = document.getElementById('status');
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '加载失败: ' + error.message;
+                console.error('加载错误:', error);
+            }
+        }
+        
+        // 页面加载时自动加载模块
+        loadModule();
+        
+        // 全局测试函数
+        window.testModule = function() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>模块信息:</h3>';
+            
+            if (window.worldlineInstance) {
+                output.innerHTML += '<p>✅ 模块已成功加载</p>';
+                output.innerHTML += '<p>可用函数:</p><ul>';
+                output.innerHTML += '<li>F0</li>';
+                output.innerHTML += '<li>DecodeMgc</li>';
+                output.innerHTML += '<li>DecodeBap</li>';
+                output.innerHTML += '<li>WorldSynthesis</li>';
+                output.innerHTML += '<li>Resample</li>';
+                output.innerHTML += '<li>PhraseSynthNew</li>';
+                output.innerHTML += '<li>PhraseSynthDelete</li>';
+                output.innerHTML += '<li>PhraseSynthAddRequest</li>';
+                output.innerHTML += '<li>PhraseSynthSetCurves</li>';
+                output.innerHTML += '<li>PhraseSynthSynth</li>';
+                output.innerHTML += '</ul>';
+            } else {
+                output.innerHTML += '<p>❌ 模块未加载</p>';
+            }
+        };
+        
+        window.testF0 = function() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>F0测试:</h3>';
+            
+            if (!window.worldlineInstance) {
+                output.innerHTML += '<p>❌ 模块未加载</p>';
+                return;
+            }
+            
+            try {
+                // 创建一个简单的测试音频数据（正弦波）
+                const sampleRate = 44100;
+                const duration = 0.1; // 100ms
+                const frequency = 440; // A4音符
+                const samples = new Float32Array(sampleRate * duration);
+                
+                for (let i = 0; i < samples.length; i++) {
+                    samples[i] = Math.sin(2 * Math.PI * frequency * i / sampleRate);
+                }
+                
+                output.innerHTML += '<p>✅ 创建测试音频数据成功</p>';
+                output.innerHTML += `<p>采样率: ${sampleRate}Hz</p>`;
+                output.innerHTML += `<p>时长: ${duration}s</p>`;
+                output.innerHTML += `<p>频率: ${frequency}Hz</p>`;
+                output.innerHTML += `<p>样本数: ${samples.length}</p>`;
+                
+                // 注意：实际的F0计算需要更复杂的实现
+                output.innerHTML += '<p>⚠️ F0计算功能需要进一步实现</p>';
+                
+            } catch (error) {
+                output.innerHTML += `<p>❌ 测试失败: ${error.message}</p>`;
+                console.error('F0测试错误:', error);
+            }
+        };
+    </script>
+</body>
+</html> 

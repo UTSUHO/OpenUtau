@@ -368,22 +368,20 @@ void Synthesis(const double *f0, int f0_length,
 
   frame_period /= 1000.0;
   int noise_size;
-  int index, offset, lower_limit, upper_limit;
   for (int i = 0; i < number_of_pulses; ++i) {
     noise_size = pulse_locations_index[MyMinInt(number_of_pulses - 1, i + 1)] -
       pulse_locations_index[i];
-    int frame_index = (int)(1.0 * pulse_locations_index[i] / fs / frame_period);
     int frame_index = (int)(1.0 * pulse_locations_index[i] / fs / frame_period);
     GetOneFrameSegment(interpolated_vuv[pulse_locations_index[i]], noise_size,
         spectrogram, fft_size, aperiodicity, f0_length, frame_period,
         pulse_locations[i], pulse_locations_time_shift[i], fs,
         &forward_real_fft, &inverse_real_fft, &minimum_phase, dc_remover,
         tension[frame_index], breathiness[frame_index], voicing[frame_index], impulse_response);
-    offset = pulse_locations_index[i] - fft_size / 2 + 1;
-    lower_limit = MyMaxInt(0, -offset);
-    upper_limit = MyMinInt(fft_size, y_length - offset);
+    int offset = pulse_locations_index[i] - fft_size / 2 + 1;
+    int lower_limit = MyMaxInt(0, -offset);
+    int upper_limit = MyMinInt(fft_size, y_length - offset);
     for (int j = lower_limit; j < upper_limit; ++j) {
-      index = j + offset;
+      int index = j + offset;
       y[index] += impulse_response[j];
     }
   }

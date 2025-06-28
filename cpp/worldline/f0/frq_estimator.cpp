@@ -8,6 +8,9 @@
 #include "world/dio.h"
 #include "worldline/classic/frq.h"
 
+// 定义FP_TYPE为double类型
+#define FP_TYPE double
+
 extern "C" {
 #include "pyin.h"
 }
