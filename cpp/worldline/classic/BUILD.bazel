@@ -35,7 +35,7 @@ cc_test(
         ":timing",
         "//worldline:synth_request",
         "//worldline/model",
-        "@gtest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 

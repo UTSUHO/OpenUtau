@@ -1,0 +1,4 @@
+"""OpenUtau C++ module."""
+module(name = "openutau-cpp")
+
+# All dependencies are now defined in WORKSPACE.bazel using local_repository 

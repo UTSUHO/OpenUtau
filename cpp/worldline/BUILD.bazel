@@ -7,15 +7,7 @@ cc_binary(
     srcs = ["audio_debug.cc"],
     deps = [
         ":audio_output_lib",
-        "@absl//absl/debugging:failure_signal_handler",
-        "@absl//absl/debugging:symbolize",
-        "@absl//absl/flags:flag",
-        "@absl//absl/flags:parse",
-        "@absl//absl/log",
-        "@absl//absl/log:check",
-        "@absl//absl/log:initialize",
-        "@absl//absl/strings",
-        "@absl//absl/strings:string_view",
+        "@abseil-cpp//:absl",
         "@miniaudio",
         "@xxhash",
     ],
@@ -36,10 +28,8 @@ cc_test(
     srcs = ["audio_output_test.cc"],
     deps = [
         ":audio_output_lib",
-        "@absl//absl/log",
-        "@absl//absl/strings",
-        "@absl//absl/time",
-        "@gtest//:gtest_main",
+        "@abseil-cpp//:absl",
+        "@miniaudio",
         "@xxhash",
     ],
 )
@@ -93,7 +83,7 @@ cc_test(
     ],
     deps = [
         ":worldline_lib",
-        "@gtest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -104,8 +94,7 @@ cc_binary(
     ],
     deps = [
         ":worldline_lib",
-        "@absl//absl/debugging:failure_signal_handler",
-        "@absl//absl/debugging:symbolize",
+        "@abseil-cpp//:absl",
         "@world//:audioio",
     ],
 )

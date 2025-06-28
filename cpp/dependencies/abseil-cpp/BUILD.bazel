@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "absl",
+    srcs = glob([
+        "absl/**/*.cc",
+        "absl/**/*.h",
+    ]),
+    hdrs = glob([
+        "absl/**/*.h",
+    ]),
+    includes = ["."],
+)
