@@ -1,4 +1,4 @@
-# Complete patch application script
+﻿# Complete patch application script
 Write-Host "Applying complete patches to all dependencies..." -ForegroundColor Green
 
 $dependenciesDir = "dependencies"

@@ -38,7 +38,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <math.h>
 #if !defined(_WIN32)
 #if !defined(_WIN32)
+#if !defined(_WIN32)
+#if !defined(_WIN32)
+#if !defined(_WIN32)
 #include <unistd.h>
+#endif
+#endif
+#endif
 #endif
 #endif
 

@@ -306,6 +306,18 @@ static void D4CGeneralBody(const double *x, int x_length, int fs,
     smoothed_power_spectrum[i] = MyMaxDouble(
       world::kMySafeGuardMinimum, smoothed_power_spectrum[i]);
   }
+  for (int i = 0; i < fft_size / 2 + 1; ++i) {
+    smoothed_power_spectrum[i] = MyMaxDouble(
+      world::kMySafeGuardMinimum, smoothed_power_spectrum[i]);
+  }
+  for (int i = 0; i < fft_size / 2 + 1; ++i) {
+    smoothed_power_spectrum[i] = MyMaxDouble(
+      world::kMySafeGuardMinimum, smoothed_power_spectrum[i]);
+  }
+  for (int i = 0; i < fft_size / 2 + 1; ++i) {
+    smoothed_power_spectrum[i] = MyMaxDouble(
+      world::kMySafeGuardMinimum, smoothed_power_spectrum[i]);
+  }
   GetStaticGroupDelay(static_centroid, smoothed_power_spectrum,
       fs, current_f0, fft_size, static_group_delay);
 

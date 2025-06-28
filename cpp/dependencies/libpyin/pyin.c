@@ -43,6 +43,18 @@ static int min(int a, int b) { return a < b ? a : b; }
 static int min(int a, int b) { return a < b ? a : b; }
 #endif
 
+#if !defined(_WIN32)
+static int min(int a, int b) { return a < b ? a : b; }
+#endif
+
+#if !defined(_WIN32)
+static int min(int a, int b) { return a < b ? a : b; }
+#endif
+
+#if !defined(_WIN32)
+static int min(int a, int b) { return a < b ? a : b; }
+#endif
+
 FP_TYPE* pyin_yincorr(FP_TYPE* x, int nx, int w);
 FP_TYPE pyin_qinterp(FP_TYPE* x, int k, FP_TYPE* y);
 

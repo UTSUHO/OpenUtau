@@ -25,6 +25,15 @@ WORLD_BEGIN_C_DECLS
 //   tension              : Tension, 1 = unmodified
 //   breathiness          : Breathiness, 1 = unmodified
 //   voicing              : Voicing, 1 = unmodified
+//   tension              : Tension, 1 = unmodified
+//   breathiness          : Breathiness, 1 = unmodified
+//   voicing              : Voicing, 1 = unmodified
+//   tension              : Tension, 1 = unmodified
+//   breathiness          : Breathiness, 1 = unmodified
+//   voicing              : Voicing, 1 = unmodified
+//   tension              : Tension, 1 = unmodified
+//   breathiness          : Breathiness, 1 = unmodified
+//   voicing              : Voicing, 1 = unmodified
 //   y_length             : Length of the output signal (Memory of y has been
 //                          allocated in advance)
 // Output:

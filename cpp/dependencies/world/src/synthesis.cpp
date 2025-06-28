@@ -188,6 +188,7 @@ static void GetOneFrameSegment(double current_vuv, int noise_size,
     const ForwardRealFFT *forward_real_fft,
     const InverseRealFFT *inverse_real_fft,
     const MinimumPhaseAnalysis *minimum_phase, const double *dc_remover,
+    const double* tension, double breathiness, double voicing,
     double *response) {
   double *aperiodic_response = new double[fft_size];
   double *periodic_response = new double[fft_size];
@@ -372,7 +373,7 @@ void Synthesis(const double *f0, int f0_length,
     noise_size = pulse_locations_index[MyMinInt(number_of_pulses - 1, i + 1)] -
       pulse_locations_index[i];
     int frame_index = (int)(1.0 * pulse_locations_index[i] / fs / frame_period);
-
+    int frame_index = (int)(1.0 * pulse_locations_index[i] / fs / frame_period);
     GetOneFrameSegment(interpolated_vuv[pulse_locations_index[i]], noise_size,
         spectrogram, fft_size, aperiodicity, f0_length, frame_period,
         pulse_locations[i], pulse_locations_time_shift[i], fs,
